@@ -1,0 +1,2263 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
+
+<title>Для моего Солнца ❤️</title>
+
+
+<style>
+
+/* =========================================================
+   ОСНОВА
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    background: #030108;
+}
+
+body {
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    color: white;
+
+    user-select: none;
+}
+
+
+/* =========================================================
+   CANVAS
+========================================================= */
+
+canvas {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #10051c 0%,
+            #05020b 55%,
+            #020107 100%
+        );
+}
+
+
+/* =========================================================
+   ЛЁГКАЯ ВИНЬЕТКА
+========================================================= */
+
+.vignette {
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 4;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 45%,
+            rgba(0,0,0,.35) 100%
+        );
+}
+
+
+/* =========================================================
+   НАЧАЛЬНЫЙ ЭКРАН
+========================================================= */
+
+.intro {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 20;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    padding: 30px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(65,20,100,.16),
+            transparent 60%
+        );
+
+    transition:
+        opacity 2s ease,
+        transform 2s ease;
+}
+
+.intro.hidden {
+
+    opacity: 0;
+
+    transform:
+        scale(1.08);
+
+    pointer-events: none;
+}
+
+
+.intro-small {
+
+    font-size:
+        clamp(
+            14px,
+            3.5vw,
+            19px
+        );
+
+    letter-spacing:
+        3px;
+
+    text-transform:
+        uppercase;
+
+    opacity: .65;
+
+    margin-bottom: 20px;
+}
+
+
+.intro-title {
+
+    font-size:
+        clamp(
+            26px,
+            7vw,
+            48px
+        );
+
+    line-height: 1.35;
+
+    text-shadow:
+        0 0 15px #b45cff,
+        0 0 40px rgba(180,70,255,.5);
+
+    margin-bottom: 38px;
+}
+
+
+.start-button {
+
+    border: 1px solid
+        rgba(
+            205,
+            130,
+            255,
+            .7
+        );
+
+    border-radius:
+        100px;
+
+    padding:
+        15px 36px;
+
+    color: white;
+
+    background:
+        rgba(
+            100,
+            30,
+            150,
+            .22
+        );
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:
+        18px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 15px
+        rgba(
+            175,
+            70,
+            255,
+            .35
+        );
+
+    backdrop-filter:
+        blur(10px);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
+}
+
+.start-button:hover {
+
+    transform:
+        scale(1.06);
+
+    background:
+        rgba(
+            120,
+            40,
+            170,
+            .35
+        );
+
+    box-shadow:
+        0 0 35px
+        rgba(
+            180,
+            80,
+            255,
+            .65
+        );
+}
+
+.start-button:active {
+
+    transform:
+        scale(.95);
+}
+
+
+/* =========================================================
+   ТЕКСТ ИСТОРИИ
+========================================================= */
+
+.message {
+
+    position: fixed;
+
+    z-index: 15;
+
+    left: 50%;
+    top: 50%;
+
+    width: min(
+        90vw,
+        760px
+    );
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    text-align: center;
+
+    font-size:
+        clamp(
+            21px,
+            5.5vw,
+            37px
+        );
+
+    line-height:
+        1.55;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 1.8s ease,
+        transform 1.8s ease;
+
+    text-shadow:
+        0 0 10px
+            rgba(
+                190,
+                110,
+                255,
+                .9
+            ),
+
+        0 0 35px
+            rgba(
+                150,
+                50,
+                255,
+                .55
+            );
+}
+
+.message.show {
+
+    opacity: 1;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(1);
+}
+
+
+.message.fade-start {
+
+    transform:
+        translate(
+            -50%,
+            -47%
+        )
+        scale(.97);
+}
+
+
+.message.small {
+
+    font-size:
+        clamp(
+            17px,
+            4.5vw,
+            27px
+        );
+}
+
+
+.message.big {
+
+    font-size:
+        clamp(
+            34px,
+            9vw,
+            68px
+        );
+}
+
+
+.message.sun {
+
+    font-size:
+        clamp(
+            31px,
+            8vw,
+            58px
+        );
+}
+
+
+/* =========================================================
+   ФИНАЛЬНАЯ КНОПКА
+========================================================= */
+
+.restart {
+
+    position: fixed;
+
+    left: 50%;
+
+    bottom: 8vh;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 30;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    border: 1px solid
+        rgba(
+            205,
+            130,
+            255,
+            .5
+        );
+
+    border-radius:
+        50px;
+
+    padding:
+        11px 23px;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .85
+        );
+
+    background:
+        rgba(
+            50,
+            15,
+            75,
+            .35
+        );
+
+    font-family:
+        Georgia,
+        serif;
+
+    transition:
+        opacity 1s ease;
+
+}
+
+.restart.show {
+
+    opacity: .7;
+
+    pointer-events:
+        auto;
+}
+
+
+/* =========================================================
+   МАЛЕНЬКИЙ ТЕКСТ ВНИЗУ
+========================================================= */
+
+.signature {
+
+    position: fixed;
+
+    bottom: 20px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 10;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+
+    opacity: 0;
+
+    transition:
+        opacity 2s ease;
+
+    white-space:
+        nowrap;
+}
+
+.signature.show {
+
+    opacity: .35;
+}
+
+</style>
+
+</head>
+
+
+
+<body>
+
+
+<canvas id="canvas"></canvas>
+
+
+<div class="vignette"></div>
+
+
+
+<!-- ======================================================
+     ПЕРВЫЙ ЭКРАН
+====================================================== -->
+
+<div
+    class="intro"
+    id="intro"
+>
+
+    <div class="intro-small">
+        маленькая история
+    </div>
+
+
+    <div class="intro-title">
+
+        Для одного очень особенного
+        человека… ❤️
+
+    </div>
+
+
+    <button
+        class="start-button"
+        id="startButton"
+    >
+
+        Открыть ❤️
+
+    </button>
+
+</div>
+
+
+
+<!-- ======================================================
+     ТЕКСТ
+====================================================== -->
+
+<div
+    class="message fade-start"
+    id="message"
+></div>
+
+
+
+<!-- ======================================================
+     ПЕРЕЗАПУСК
+====================================================== -->
+
+<button
+    class="restart"
+    id="restart"
+>
+
+    Ещё раз ❤️
+
+</button>
+
+
+<div
+    class="signature"
+    id="signature"
+>
+
+    ☀️
+
+</div>
+
+
+
+<script>
+
+
+/* =========================================================
+   ЭЛЕМЕНТЫ
+========================================================= */
+
+const canvas =
+    document.getElementById(
+        "canvas"
+    );
+
+const ctx =
+    canvas.getContext(
+        "2d"
+    );
+
+const intro =
+    document.getElementById(
+        "intro"
+    );
+
+const startButton =
+    document.getElementById(
+        "startButton"
+    );
+
+const message =
+    document.getElementById(
+        "message"
+    );
+
+const restart =
+    document.getElementById(
+        "restart"
+    );
+
+const signature =
+    document.getElementById(
+        "signature"
+    );
+
+
+/* =========================================================
+   РАЗМЕР
+========================================================= */
+
+let width = 0;
+let height = 0;
+let dpr = 1;
+
+
+/* =========================================================
+   СОСТОЯНИЕ
+========================================================= */
+
+let running = false;
+
+let heartForming = false;
+
+let galaxyActive = false;
+
+let shootingStarsActive = false;
+
+
+/* =========================================================
+   КОЛИЧЕСТВО ЧАСТИЦ
+========================================================= */
+
+const HEART_COUNT =
+    850;
+
+const ORBIT_COUNT =
+    260;
+
+const BACKGROUND_STARS =
+    150;
+
+
+/* =========================================================
+   МАССИВЫ
+========================================================= */
+
+let heartParticles = [];
+
+let orbitParticles = [];
+
+let backgroundStars = [];
+
+let shootingStars = [];
+
+
+/* =========================================================
+   УТИЛИТЫ
+========================================================= */
+
+function random(
+    min,
+    max
+) {
+
+    return (
+        Math.random() *
+        (max - min) +
+        min
+    );
+
+}
+
+
+function clamp(
+    value,
+    min,
+    max
+) {
+
+    return Math.max(
+        min,
+        Math.min(
+            max,
+            value
+        )
+    );
+
+}
+
+
+/* =========================================================
+   RESIZE
+========================================================= */
+
+function resize() {
+
+    dpr =
+        Math.min(
+            window.devicePixelRatio || 1,
+            2
+        );
+
+    width =
+        window.innerWidth;
+
+    height =
+        window.innerHeight;
+
+
+    canvas.width =
+        width * dpr;
+
+    canvas.height =
+        height * dpr;
+
+
+    canvas.style.width =
+        width + "px";
+
+    canvas.style.height =
+        height + "px";
+
+
+    ctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
+
+
+    createBackgroundStars();
+
+
+    if (
+        heartForming ||
+        running
+    ) {
+
+        createHeartTargets();
+
+    }
+
+
+    createOrbit();
+
+}
+
+
+window.addEventListener(
+    "resize",
+    resize
+);
+
+
+/* =========================================================
+   РАЗМЕР СЕРДЦА
+
+   ОДНА ФУНКЦИЯ ДЛЯ ВСЕГО.
+
+   Именно поэтому телефон и ПК
+   сохраняют пропорции.
+========================================================= */
+
+function getHeartScale() {
+
+    return (
+        Math.min(
+            width,
+            height
+        ) / 39
+    );
+
+}
+
+
+/* =========================================================
+   ФОРМУЛА СЕРДЦА
+========================================================= */
+
+function heartPoint(
+    t,
+    scale
+) {
+
+    const x =
+        16 *
+        Math.pow(
+            Math.sin(t),
+            3
+        );
+
+
+    const y =
+        13 *
+        Math.cos(t)
+
+        -
+
+        5 *
+        Math.cos(
+            2 * t
+        )
+
+        -
+
+        2 *
+        Math.cos(
+            3 * t
+        )
+
+        -
+
+        Math.cos(
+            4 * t
+        );
+
+
+    return {
+
+        x:
+            x * scale,
+
+        y:
+            -y * scale
+
+    };
+
+}
+
+
+/* =========================================================
+   ФОНОВЫЕ ЗВЁЗДЫ
+========================================================= */
+
+function createBackgroundStars() {
+
+    backgroundStars = [];
+
+
+    const amount =
+        width < 600
+            ? 90
+            : BACKGROUND_STARS;
+
+
+    for (
+        let i = 0;
+        i < amount;
+        i++
+    ) {
+
+        backgroundStars.push({
+
+            x:
+                Math.random() *
+                width,
+
+            y:
+                Math.random() *
+                height,
+
+            size:
+                random(
+                    .3,
+                    1.2
+                ),
+
+            alpha:
+                random(
+                    .1,
+                    .45
+                ),
+
+            phase:
+                Math.random() *
+                Math.PI *
+                2
+
+        });
+
+    }
+
+}
+
+
+/* =========================================================
+   ЧАСТИЦЫ СЕРДЦА
+========================================================= */
+
+function createHeartParticles() {
+
+    heartParticles = [];
+
+
+    for (
+        let i = 0;
+        i < HEART_COUNT;
+        i++
+    ) {
+
+        heartParticles.push({
+
+            x:
+                Math.random() *
+                width,
+
+            y:
+                Math.random() *
+                height,
+
+            targetX: 0,
+
+            targetY: 0,
+
+            baseX: 0,
+
+            baseY: 0,
+
+            size:
+                random(
+                    .65,
+                    2.1
+                ),
+
+            alpha:
+                random(
+                    .35,
+                    1
+                ),
+
+            phase:
+                Math.random() *
+                Math.PI *
+                2,
+
+            drift:
+                random(
+                    .3,
+                    2
+                ),
+
+            speed:
+                random(
+                    .012,
+                    .026
+                )
+
+        });
+
+    }
+
+}
+
+
+/* =========================================================
+   ЦЕЛИ СЕРДЦА
+========================================================= */
+
+function createHeartTargets() {
+
+    const scale =
+        getHeartScale();
+
+
+    for (
+        const p
+        of heartParticles
+    ) {
+
+        const t =
+            Math.random() *
+            Math.PI *
+            2;
+
+
+        const point =
+            heartPoint(
+                t,
+                scale
+            );
+
+
+        /*
+           sqrt делает распределение
+           более равномерным внутри сердца.
+        */
+
+        const fill =
+            Math.sqrt(
+                Math.random()
+            );
+
+
+        p.baseX =
+            point.x *
+            fill;
+
+
+        p.baseY =
+            point.y *
+            fill;
+
+
+        p.targetX =
+            width / 2 +
+            p.baseX;
+
+
+        p.targetY =
+            height / 2 +
+            p.baseY;
+
+    }
+
+}
+
+
+/* =========================================================
+   ОРБИТА
+
+   ВАЖНАЯ ЧАСТЬ.
+
+   Сначала определяем реальный размер
+   сердца.
+
+   Потом ставим орбиту ЗА пределами сердца.
+========================================================= */
+
+function createOrbit() {
+
+    orbitParticles = [];
+
+
+    const heartScale =
+        getHeartScale();
+
+
+    /*
+       Сердце примерно достигает
+       16 * scale от центра.
+
+       Берём дополнительный запас.
+    */
+
+    const heartRadius =
+        18 *
+        heartScale;
+
+
+    /*
+       Орбита начинается
+       за сердцем.
+    */
+
+    const innerRadius =
+        heartRadius *
+        1.30;
+
+
+    const outerRadius =
+        heartRadius *
+        1.55;
+
+
+    for (
+        let i = 0;
+        i < ORBIT_COUNT;
+        i++
+    ) {
+
+        const angle =
+            Math.random() *
+            Math.PI *
+            2;
+
+
+        const radius =
+            random(
+                innerRadius,
+                outerRadius
+            );
+
+
+        orbitParticles.push({
+
+            angle:
+                angle,
+
+            radius:
+                radius,
+
+            speed:
+                random(
+                    .00012,
+                    .00032
+                ),
+
+            size:
+                random(
+                    .45,
+                    1.7
+                ),
+
+            alpha:
+                random(
+                    .2,
+                    .85
+                ),
+
+            phase:
+                Math.random() *
+                Math.PI *
+                2,
+
+            wobble:
+                random(
+                    1.5,
+                    8
+                )
+
+        });
+
+    }
+
+}
+
+
+/* =========================================================
+   ПАДАЮЩИЕ ЗВЁЗДЫ
+========================================================= */
+
+function spawnShootingStar() {
+
+    if (
+        !shootingStarsActive
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+       Начинаем немного за экраном.
+    */
+
+    shootingStars.push({
+
+        x:
+            random(
+                width * .05,
+                width * .9
+            ),
+
+        y:
+            random(
+                height * .05,
+                height * .35
+            ),
+
+        length:
+            random(
+                30,
+                80
+            ),
+
+        speed:
+            random(
+                4,
+                8
+            ),
+
+        alpha: 1,
+
+        life: 0,
+
+        maxLife:
+            random(
+                35,
+                65
+            )
+
+    });
+
+}
+
+
+setInterval(
+    () => {
+
+        if (
+            shootingStarsActive &&
+            Math.random() < .55
+        ) {
+
+            spawnShootingStar();
+
+        }
+
+    },
+    1800
+);
+
+
+/* =========================================================
+   ФОН
+========================================================= */
+
+function drawBackground(
+    time
+) {
+
+    ctx.fillStyle =
+        "#030108";
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    /*
+       Очень мягкое свечение
+       за сердцем.
+    */
+
+    if (
+        heartForming ||
+        galaxyActive
+    ) {
+
+        const glow =
+            ctx.createRadialGradient(
+                width / 2,
+                height / 2,
+                0,
+                width / 2,
+                height / 2,
+                Math.min(
+                    width,
+                    height
+                ) * .48
+            );
+
+
+        glow.addColorStop(
+            0,
+            "rgba(120,35,190,.10)"
+        );
+
+        glow.addColorStop(
+            .45,
+            "rgba(80,20,130,.04)"
+        );
+
+        glow.addColorStop(
+            1,
+            "rgba(0,0,0,0)"
+        );
+
+
+        ctx.fillStyle =
+            glow;
+
+
+        ctx.fillRect(
+            0,
+            0,
+            width,
+            height
+        );
+
+    }
+
+
+    /*
+       Далёкие звёзды.
+    */
+
+    for (
+        const s
+        of backgroundStars
+    ) {
+
+        const twinkle =
+            .65 +
+            Math.sin(
+                time * .0015 +
+                s.phase
+            ) *
+            .35;
+
+
+        ctx.beginPath();
+
+
+        ctx.arc(
+            s.x,
+            s.y,
+            s.size,
+            0,
+            Math.PI * 2
+        );
+
+
+        ctx.fillStyle =
+            `rgba(
+                205,
+                155,
+                255,
+                ${s.alpha * twinkle}
+            )`;
+
+
+        ctx.fill();
+
+    }
+
+}
+
+
+/* =========================================================
+   ОРБИТА
+========================================================= */
+
+function drawOrbit(
+    time
+) {
+
+    if (
+        !galaxyActive
+    ) {
+
+        return;
+
+    }
+
+
+    const cx =
+        width / 2;
+
+    const cy =
+        height / 2;
+
+
+    /*
+       Мягкое свечение орбиты.
+    */
+
+    ctx.save();
+
+
+    ctx.translate(
+        cx,
+        cy
+    );
+
+
+    ctx.rotate(
+        Math.sin(
+            time * .00015
+        ) * .12
+    );
+
+
+    /*
+       Несколько очень слабых
+       линий орбиты.
+    */
+
+    const scale =
+        getHeartScale();
+
+
+    const orbitRadius =
+        18 *
+        scale *
+        1.42;
+
+
+    ctx.beginPath();
+
+
+    ctx.ellipse(
+        0,
+        0,
+        orbitRadius,
+        orbitRadius * .72,
+        0,
+        0,
+        Math.PI * 2
+    );
+
+
+    ctx.strokeStyle =
+        "rgba(180,90,255,.12)";
+
+
+    ctx.lineWidth =
+        Math.max(
+            1,
+            scale * .025
+        );
+
+
+    ctx.shadowBlur =
+        12;
+
+    ctx.shadowColor =
+        "rgba(180,80,255,.6)";
+
+
+    ctx.stroke();
+
+
+    ctx.restore();
+
+
+
+    /*
+       Частицы орбиты.
+    */
+
+    for (
+        const p
+        of orbitParticles
+    ) {
+
+        p.angle +=
+            p.speed;
+
+
+        const wobble =
+            Math.sin(
+                time * .001 +
+                p.phase
+            ) *
+            p.wobble;
+
+
+        const r =
+            p.radius +
+            wobble;
+
+
+        const angle =
+            p.angle;
+
+
+        const x =
+            cx +
+            Math.cos(
+                angle
+            ) *
+            r;
+
+
+        const y =
+            cy +
+            Math.sin(
+                angle
+            ) *
+            r *
+            .72;
+
+
+        const twinkle =
+            .7 +
+            Math.sin(
+                time * .002 +
+                p.phase
+            ) *
+            .3;
+
+
+        ctx.beginPath();
+
+
+        ctx.arc(
+            x,
+            y,
+            p.size,
+            0,
+            Math.PI * 2
+        );
+
+
+        ctx.fillStyle =
+            `rgba(
+                205,
+                120,
+                255,
+                ${p.alpha * twinkle}
+            )`;
+
+
+        ctx.shadowBlur =
+            8;
+
+        ctx.shadowColor =
+            "#b45cff";
+
+
+        ctx.fill();
+
+    }
+
+}
+
+
+/* =========================================================
+   ПАДАЮЩИЕ ЗВЁЗДЫ
+========================================================= */
+
+function drawShootingStars() {
+
+    for (
+        let i =
+            shootingStars.length - 1;
+        i >= 0;
+        i--
+    ) {
+
+        const s =
+            shootingStars[i];
+
+
+        s.x +=
+            s.speed;
+
+
+        s.y +=
+            s.speed *
+            .45;
+
+
+        s.life++;
+
+
+        const progress =
+            s.life /
+            s.maxLife;
+
+
+        s.alpha =
+            1 -
+            progress;
+
+
+        ctx.beginPath();
+
+
+        ctx.moveTo(
+            s.x,
+            s.y
+        );
+
+
+        ctx.lineTo(
+            s.x -
+            s.length,
+            s.y -
+            s.length * .45
+        );
+
+
+        const gradient =
+            ctx.createLinearGradient(
+                s.x,
+                s.y,
+                s.x -
+                s.length,
+                s.y -
+                s.length * .45
+            );
+
+
+        gradient.addColorStop(
+            0,
+            `rgba(
+                235,
+                190,
+                255,
+                ${s.alpha}
+            )`
+        );
+
+
+        gradient.addColorStop(
+            1,
+            "rgba(180,80,255,0)"
+        );
+
+
+        ctx.strokeStyle =
+            gradient;
+
+
+        ctx.lineWidth =
+            1.3;
+
+
+        ctx.stroke();
+
+
+        if (
+            s.life >=
+            s.maxLife
+        ) {
+
+            shootingStars.splice(
+                i,
+                1
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   СЕРДЦЕ
+========================================================= */
+
+function drawHeart(
+    time
+) {
+
+    if (
+        !heartForming
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+       Пульс.
+
+       Сердце никогда не замирает.
+    */
+
+    const pulse =
+        1 +
+        Math.max(
+            0,
+            Math.sin(
+                time * .004
+            )
+        ) *
+        .045;
+
+
+    for (
+        const p
+        of heartParticles
+    ) {
+
+        const targetX =
+            width / 2 +
+            p.baseX *
+            pulse;
+
+
+        const targetY =
+            height / 2 +
+            p.baseY *
+            pulse;
+
+
+        /*
+           Основное движение
+           к форме сердца.
+        */
+
+        p.x +=
+            (
+                targetX -
+                p.x
+            ) *
+            p.speed;
+
+
+        p.y +=
+            (
+                targetY -
+                p.y
+            ) *
+            p.speed;
+
+
+        /*
+           Живое микродвижение.
+
+           Поэтому сердце НЕ превращается
+           в статичную картинку.
+        */
+
+        const driftX =
+            Math.sin(
+                time * .0013 +
+                p.phase
+            ) *
+            p.drift;
+
+
+        const driftY =
+            Math.cos(
+                time * .0011 +
+                p.phase
+            ) *
+            p.drift;
+
+
+        p.x +=
+            (
+                targetX +
+                driftX -
+                p.x
+            ) *
+            .055;
+
+
+        p.y +=
+            (
+                targetY +
+                driftY -
+                p.y
+            ) *
+            .055;
+
+
+        /*
+           Мерцание.
+        */
+
+        const sparkle =
+            .72 +
+            Math.sin(
+                time * .002 +
+                p.phase
+            ) *
+            .28;
+
+
+        const size =
+            p.size *
+            sparkle;
+
+
+        ctx.beginPath();
+
+
+        ctx.arc(
+            p.x,
+            p.y,
+            size,
+            0,
+            Math.PI * 2
+        );
+
+
+        const brightness =
+            clamp(
+                p.alpha +
+                (
+                    pulse -
+                    1
+                ) * 2,
+                .15,
+                1
+            );
+
+
+        ctx.fillStyle =
+            `rgba(
+                190,
+                85,
+                255,
+                ${brightness}
+            )`;
+
+
+        ctx.shadowBlur =
+            8;
+
+
+        ctx.shadowColor =
+            "#ad42ff";
+
+
+        ctx.fill();
+
+    }
+
+}
+
+
+/* =========================================================
+   ГЛАВНЫЙ ЦИКЛ
+========================================================= */
+
+function animate(
+    time
+) {
+
+    drawBackground(
+        time
+    );
+
+
+    drawOrbit(
+        time
+    );
+
+
+    drawHeart(
+        time
+    );
+
+
+    drawShootingStars();
+
+
+    requestAnimationFrame(
+        animate
+    );
+
+}
+
+
+requestAnimationFrame(
+    animate
+);
+
+
+/* =========================================================
+   ОЖИДАНИЕ
+========================================================= */
+
+function wait(
+    ms
+) {
+
+    return new Promise(
+        resolve =>
+            setTimeout(
+                resolve,
+                ms
+            )
+    );
+
+}
+
+
+/* =========================================================
+   ПОКАЗ СООБЩЕНИЯ
+========================================================= */
+
+async function showMessage(
+    text,
+    duration,
+    className = ""
+) {
+
+    message.className =
+        "message fade-start " +
+        className;
+
+
+    message.innerHTML =
+        text;
+
+
+    await wait(100);
+
+
+    message.classList.add(
+        "show"
+    );
+
+
+    await wait(
+        duration
+    );
+
+
+    message.classList.remove(
+        "show"
+    );
+
+
+    await wait(
+        1800
+    );
+
+}
+
+
+/* =========================================================
+   НАЧАЛО
+========================================================= */
+
+async function startStory() {
+
+    if (
+        running
+    ) {
+
+        return;
+
+    }
+
+
+    running = true;
+
+
+    startButton.disabled =
+        true;
+
+
+    intro.classList.add(
+        "hidden"
+    );
+
+
+    await wait(
+        1700
+    );
+
+
+    intro.style.display =
+        "none";
+
+
+    /* -----------------------------------------
+       СЦЕНА 1
+    ----------------------------------------- */
+
+    await showMessage(
+
+        "Иногда среди миллионов людей<br>" +
+        "в твоей жизни появляется один человек…",
+
+        3500
+
+    );
+
+
+    /* -----------------------------------------
+       СЦЕНА 2
+    ----------------------------------------- */
+
+    await showMessage(
+
+        "И всё вокруг будто становится<br>" +
+        "немного теплее. ❤️",
+
+        3300
+
+    );
+
+
+    /* -----------------------------------------
+       СЦЕНА 3
+    ----------------------------------------- */
+
+    await showMessage(
+
+        "Для меня таким человеком<br>" +
+        "стала ты.",
+
+        3300
+
+    );
+
+
+    /* -----------------------------------------
+       НАЧИНАЕТСЯ СЕРДЦЕ
+    ----------------------------------------- */
+
+    createHeartTargets();
+
+
+    heartForming =
+        true;
+
+
+    await wait(
+        6000
+    );
+
+
+    /* -----------------------------------------
+       СЕРДЦЕ ГОТОВО
+    ----------------------------------------- */
+
+    await showMessage(
+
+        "И если бы мне пришлось<br>" +
+        "собрать всё самое дорогое<br>" +
+        "в одном месте…",
+
+        3600,
+        "small"
+
+    );
+
+
+    /* -----------------------------------------
+       ОРБИТА
+    ----------------------------------------- */
+
+    createOrbit();
+
+
+    galaxyActive =
+        true;
+
+
+    shootingStarsActive =
+        true;
+
+
+    await wait(
+        1200
+    );
+
+
+    await showMessage(
+
+        "Я бы собрал вокруг него<br>" +
+        "целую вселенную. 🌌❤️",
+
+        3800
+
+    );
+
+
+    /* -----------------------------------------
+       СОЛНЦЕ
+    ----------------------------------------- */
+
+    await showMessage(
+
+        "Потому что ты —<br>" +
+        "моё Солнце. ☀️❤️",
+
+        4000,
+        "sun"
+
+    );
+
+
+    /* -----------------------------------------
+       БЛАГОДАРНОСТЬ
+    ----------------------------------------- */
+
+    await showMessage(
+
+        "Спасибо тебе за каждый момент<br>" +
+        "рядом со мной…<br><br>" +
+
+        "за каждую улыбку,<br>" +
+        "каждый взгляд<br>" +
+        "и каждое мгновение,<br>" +
+        "которое стало особенным. ❤️",
+
+        5600,
+        "small"
+
+    );
+
+
+    /* -----------------------------------------
+       СЧАСТЬЕ
+    ----------------------------------------- */
+
+    await showMessage(
+
+        "Ты стала частью моего мира<br>" +
+        "и сделала его намного теплее. ❤️",
+
+        4300,
+        "small"
+
+    );
+
+
+    /* -----------------------------------------
+       ПАУЗА
+    ----------------------------------------- */
+
+    await wait(
+        1000
+    );
+
+
+    /* -----------------------------------------
+       ФИНАЛ
+    ----------------------------------------- */
+
+    await showMessage(
+
+        "Я люблю тебя. ❤️",
+
+        5500,
+        "big"
+
+    );
+
+
+    /* -----------------------------------------
+       ПОСЛЕДНЯЯ ФРАЗА
+    ----------------------------------------- */
+
+    await showMessage(
+
+        "Моё Солнце ☀️❤️",
+
+        5000,
+        "sun"
+
+    );
+
+
+    /*
+       Оставляем сердце и галактику
+       жить после окончания истории.
+    */
+
+    signature.classList.add(
+        "show"
+    );
+
+
+    restart.classList.add(
+        "show"
+    );
+
+
+    running =
+        false;
+
+}
+
+
+/* =========================================================
+   ПЕРЕЗАПУСК
+========================================================= */
+
+function resetStory() {
+
+    running =
+        false;
+
+
+    heartForming =
+        false;
+
+
+    galaxyActive =
+        false;
+
+
+    shootingStarsActive =
+        false;
+
+
+    shootingStars =
+        [];
+
+
+    message.classList.remove(
+        "show"
+    );
+
+
+    restart.classList.remove(
+        "show"
+    );
+
+
+    signature.classList.remove(
+        "show"
+    );
+
+
+    createHeartParticles();
+
+
+    createHeartTargets();
+
+
+    intro.style.display =
+        "flex";
+
+
+    intro.classList.remove(
+        "hidden"
+    );
+
+
+    startButton.disabled =
+        false;
+
+}
+
+
+startButton.addEventListener(
+    "click",
+    startStory
+);
+
+
+restart.addEventListener(
+    "click",
+    resetStory
+);
+
+
+/* =========================================================
+   ЗАПУСК
+========================================================= */
+
+createBackgroundStars();
+
+createHeartParticles();
+
+createHeartTargets();
+
+createOrbit();
+
+</script>
+
+</body>
+
+</html>
